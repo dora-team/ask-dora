@@ -1,7 +1,6 @@
 {
   "hosting": {
-    // "target": "ask-dora",
-    "site": "ask-dora-plain",
+    "target": "ask-dora",
     "public": "dist",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
   }
