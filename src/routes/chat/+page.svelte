@@ -1,0 +1,22 @@
+<div>
+<script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
+<df-messenger
+  project-id="dora-chat-bot"
+  agent-id="36ca1cd4-aa5c-403e-ae7f-11205438d9f9"
+  language-code="en"
+  storage-option="none">
+  <df-messenger-chat
+   chat-title="Ask DORA">
+  </df-messenger-chat>
+</df-messenger>
+<style>
+  df-messenger {
+    z-index: 999;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    top: 0;
+    width: 350px;
+  }
+</style>
+</div>
