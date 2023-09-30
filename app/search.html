@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat</title>
+  </head>
+  <body>
+
+    <div>
+      <script src="https://cloud.google.com/ai/gen-app-builder/client"></script>
+      <gen-search-widget
+        configId="aaf79227-48c1-4e6a-aad0-755cf53f07cb"
+        triggerId="searchWidgetTrigger"
+      />
+
+      <style>
+        .grecaptcha-badge {
+          visibility: hidden;
+        }
+      </style>
+
+      <Button color="yellow" id="searchWidgetTrigger" hidden
+        >Open Search Widget</Button
+      >
+      <script>
+        document.getElementById("searchWidgetTrigger").click();
+      </script>
+    </div>
+
+  </body>
+</html>
