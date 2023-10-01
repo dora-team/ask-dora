@@ -2,10 +2,14 @@
   import {
     lookupWidgetConfig,
     widgetConverseConversation,
-  } from "$/lib/discovery_engine";
+  } from "../lib/discovery_engine";
   import { onMount } from "svelte";
 
-  const widgedID = "aaf79227-48c1-4e6a-aad0-755cf53f07cb";
+  import { Navbar, NavBrand, NavLi, NavUl } from 'flowbite-svelte';
+  import { Card } from 'flowbite-svelte';
+  import { AccordionItem, Accordion } from 'flowbite-svelte';
+
+  const widgetId = "aaf79227-48c1-4e6a-aad0-755cf53f07cb";
 
   let ready = false;
   let waiting = false;
@@ -17,27 +21,58 @@
   let searchResults: any[] = [];
 
   onMount(async () => {
-    const widgetConfig = await lookupWidgetConfig(widgedID);
-
+    const widgetConfig = await lookupWidgetConfig(widgetId);
     console.log(widgetConfig);
     ready = true;
   });
 
+  function makeTitle(slug: any) {
+    var words = slug.split('-');
+
+    for (var i = 0; i < words.length; i++) {
+      var word = words[i];
+      words[i] = word.charAt(0).toUpperCase() + word.slice(1);
+    }
+
+    return words.join(' ');
+  }
+
   async function onSubmit() {
     waiting = true;
-    const response = await widgetConverseConversation(widgedID, input);
+    const response = await widgetConverseConversation(widgetId, input);
     waiting = false;
-    console.log(response);
 
     input = "";
     placeholder = "Ask a follow up question";
     conversationID = response.conversationId;
     replies = [...replies, response.converseConversationResponse.reply];
     searchResults = response.converseConversationResponse.searchResults;
+    console.log(searchResults)
   }
 </script>
 
-<div class="flex flex-col w-full py-10">
+<Navbar rounded color="form">
+  <NavBrand>
+    <span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white">Ask DORA</span>
+  </NavBrand>
+  <NavUl>
+    <NavLi href="https://dora.dev/">DORA Website</NavLi>
+    <NavLi href="https://cloud.google.com/generative-ai-app-builder/docs/introduction">Vertex AI Search</NavLi>
+    <NavLi href="https://cloud.google.com/vertex-ai/docs/generative-ai/language-model-overview">Vertex AI PaLM API</NavLi>
+  </NavUl>
+</Navbar>
+
+<div class="flex flex-col w-full px-10 py-20">
+  <Accordion>
+    <AccordionItem open>
+      <span slot="header">How it works</span>
+      <p class="mb-2 text-gray-500 dark:text-gray-400">
+        <li>Step 1: Search query performs a vector similarity search and returns most relevant documents</li>
+        <li>Step 2: Query and relevant documents are sent to a large langauge model in Google Cloud</li>
+        <li>Step 3: Vertex AI Search returns a generated summary as well as the relevant documents that were used</li>
+      </p>
+    </AccordionItem>
+  </Accordion>
   <form
     class="w-full flex flex-col items-center"
     on:submit|preventDefault={onSubmit}
@@ -69,7 +104,7 @@
           name="search"
           bind:value={input}
           disabled={!ready}
-          class="py-2 text-sm w-[500px] text-white bg-gray-900 rounded-md pl-10 focus:outline-none focus:bg-white focus:text-gray-900"
+          class="py-2 text-sm w-[500px] text-white bg-white rounded-md pl-10 focus:outline-none focus:bg-white focus:text-gray-900"
           placeholder={!ready
             ? "Connecting to answering service please wait..."
             : placeholder}
@@ -110,9 +145,16 @@
   </form>
 
   <div class="mx-auto w-md my-10 prose prose-invert lg:prose-xl">
+    {#if searchResults.length > 0}
+    <h2 class="text-center">Generated summary</h2>
+    {/if}
     {#each replies as reply}
       <div>
-        {reply.reply}
+        <Card class="my-6 bg-blue-200" size="xl">
+          <p class="font-normal text-gray-700 dark:text-gray-400 leading-tight">
+            {reply.reply}
+          </p>
+        </Card>
       </div>
     {/each}
   </div>
@@ -120,22 +162,17 @@
   {#if searchResults.length > 0}
     <div class="mx-auto w-md my-10 prose prose-invert lg:prose-xl">
       <h2 class="text-center">Documents</h2>
-      <table class="table-auto">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Link</th>
-          </tr>
-        </thead>
-        <tbody>
           {#each searchResults as result}
-            <tr>
-              <td>{result.id}</td>
-              <td>{result.document.derivedStructData.link}</td>
-            </tr>
+
+            <Card class="my-6" size="2xl" target="_blank" href="{result.document.derivedStructData.link.replace("gs://dora-unstructured-docs/", "").replace(".html", "").replaceAll("$", "/").replaceAll("#", ":").replace("dora-dev", "dora.dev")}">
+              <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                {makeTitle(result.document.derivedStructData.link.replace("gs://dora-unstructured-docs/", "").replace("https", "").replace(".html", "").replaceAll("$", "-").replaceAll("#", "-").replace("dora-dev", ""))}
+              </h5>
+              <p class="font-normal text-gray-700 dark:text-gray-400 leading-tight">
+                {@html result.document.derivedStructData.snippets[0].snippet}
+              </p>
+            </Card>
           {/each}
-        </tbody>
-      </table>
     </div>
   {/if}
 </div>
