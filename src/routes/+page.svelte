@@ -43,7 +43,7 @@
 	}
 </script>
 
-<Navbar class="bg-[#275b89] pt-5">
+<Navbar class="bg-[#275b89] pt-2">
 	<NavBrand>
 		<span class="self-center whitespace-nowrap text-xl font-semibold text-[#e4fef6]">
 			Ask DORA (DevOps Research and Assessment)
