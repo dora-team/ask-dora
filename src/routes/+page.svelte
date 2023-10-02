@@ -35,7 +35,7 @@
 		const response = await widgetConverseConversation(widgetId, input);
 		waiting = false;
 		input = '';
-		placeholder = 'Ask a follow up question';
+		placeholder = 'Ask a follow-up question...';
 		conversationID = response.conversationId;
 		replies = [...replies, response.converseConversationResponse.reply];
 		searchResults = response.converseConversationResponse.searchResults;
