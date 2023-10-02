@@ -75,17 +75,18 @@
 		<Cta>
 			<svelte:fragment slot="h2">Ask DORA anything in natural langauge</svelte:fragment>
 			<p class="mt-6 mb-2 font-light text-gray-500 dark:text-gray-400 md:text-lg">
-        DevOps Research and Assessment (<A class="font-medium hover:underline
-        break-normal" href="https://dora.dev/">DORA</A >) is the largest and longest
-        running research program of its kind that seeks to understand the
-        capabilities that drive software delivery and operations performance. This
-        app uses <A
+        DevOps Research and Assessment (DORA) is the largest and longest running
+        research program of its kind that seeks to understand the capabilities
+        that drive software delivery and operations performance. This app uses
+        <A
         href="https://cloud.google.com/generative-ai-app-builder/docs/introduction"
-        class="font-medium hover:underline break-normal">Vertex AI Search</A > and
-        generative AI functionality in <A class="font-medium hover:underline
-        break-normal" href="https://cloud.google.com/">Google Cloud</A > to search
-        and summarize content on the DORA website via a conversational search
-        experience.
+        class="font-medium hover:underline break-normal text-[#0000EE]">Vertex
+        AI Search</A > and generative AI functionality in <A class="font-medium
+        hover:underline break-normal text-[#0000EE]"
+        href="https://cloud.google.com/">Google Cloud</A > to search and
+        summarize content on the <A class="font-medium hover:underline
+        break-normal text-[#0000EE]" href="https://dora.dev/">DORA website</A>
+        via a conversational search experience.
 			</p>
 		</Cta>
 
