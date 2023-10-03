@@ -56,11 +56,6 @@
 			href="https://cloud.google.com/generative-ai-app-builder/docs/introduction"
 			>Vertex AI Search</NavLi
 		>
-		<NavLi
-			class="text-gray-50"
-			href="https://cloud.google.com/vertex-ai/docs/generative-ai/language-model-overview"
-			>Vertex AI Language Models</NavLi
-		>
 		<NavLi class="text-gray-50" href="https://cloud.google.com/ai/generative-ai"
 			>Generative AI on Google Cloud</NavLi
 		>
