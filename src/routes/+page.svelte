@@ -1,23 +1,23 @@
 <script lang="ts">
-	import { lookupWidgetConfig, widgetConverseConversation } from '../lib/discovery_engine';
-	import { onMount } from 'svelte';
-	import { Navbar, NavBrand, NavLi, NavUl } from 'flowbite-svelte';
-	import { Heading, A, Label, Card } from 'flowbite-svelte';
-	import { Section, Cta } from 'flowbite-svelte-blocks';
-	import { Alert } from 'flowbite-svelte';
-	import { InfoCircleSolid } from 'flowbite-svelte-icons';
-	import { ButtonGroup, Button } from 'flowbite-svelte';
+	import { lookupWidgetConfig, widgetConverseConversation } from "../lib/discovery_engine";
+	import { onMount } from "svelte";
+	import { Navbar, NavBrand, NavLi, NavUl } from "flowbite-svelte";
+	import { Heading, A, Label, Card } from "flowbite-svelte";
+	import { Section, Cta } from "flowbite-svelte-blocks";
+	import { Alert } from "flowbite-svelte";
+	import { InfoCircleSolid } from "flowbite-svelte-icons";
+	import { ButtonGroup, Button } from "flowbite-svelte";
 
-	const widgetId = 'aaf79227-48c1-4e6a-aad0-755cf53f07cb';
+	const widgetId = "aaf79227-48c1-4e6a-aad0-755cf53f07cb";
 
 	let ready = false;
 	let waiting = false;
-	let input = '';
-	let placeholder = 'Ask DORA anything...';
+	let input = "";
+	let placeholder = "Ask DORA anything...";
 
 	let queries: any[] = [];
 	let replies: { reply: string }[] = [];
-	let conversationID = '-';
+	let conversationID = "-";
 	let searchResults: any[] = [];
 
 	onMount(async () => {
@@ -26,12 +26,12 @@
 	});
 
 	function makeTitle(slug: any) {
-		var words = slug.split('-');
+		var words = slug.split("-");
 		for (var i = 0; i < words.length; i++) {
 			var word = words[i];
 			words[i] = word.charAt(0).toUpperCase() + word.slice(1);
 		}
-		return words.join(' ');
+		return words.join(" ");
 	}
 
 	async function onSubmit() {
@@ -39,8 +39,8 @@
 		waiting = true;
 		const response = await widgetConverseConversation(widgetId, input);
 		waiting = false;
-		input = '';
-		placeholder = 'Ask a follow-up question...';
+		input = "";
+		placeholder = "Ask a follow-up question...";
 		conversationID = response.conversationId;
 		replies = [...replies, response.converseConversationResponse.reply];
 		searchResults = response.converseConversationResponse.searchResults;
@@ -49,16 +49,16 @@
 
 	function updateSearchField(text: string) {
 		input = text;
-		conversationID = '-';
+		conversationID = "-";
 		replies = [];
 		searchResults = [];
 		queries = [];
-		document.getElementById('submit')!.click();
+		document.getElementById("submit")!.click();
 	}
 
 	function resetForm() {
-		input = '';
-		conversationID = '-';
+		input = "";
+		conversationID = "-";
 		replies = [];
 		searchResults = [];
 		queries = [];
@@ -121,16 +121,16 @@
 			<div class="text-center mb-8">
 				<span class="font-bold">Example questions:</span>
 				<ButtonGroup>
-					<Button on:click={() => updateSearchField('What are the Four Key Metrics?')}>
+					<Button on:click={() => updateSearchField("What are the Four Key Metrics?")}>
 						What are the Four Key Metrics?</Button
 					>
-					<Button on:click={() => updateSearchField('How can I measure developer happiness?')}>
+					<Button on:click={() => updateSearchField("How can I measure developer happiness?")}>
 						How can I measure developer happiness?
 					</Button>
 					<Button
-						on:click={() => updateSearchField('What does it mean to have strong user focus?')}
+						on:click={() => updateSearchField("What are the benefits of having strong user focus?")}
 					>
-						What does it mean to have strong user focus?
+						What are the benefits of having strong user focus?
 					</Button>
 				</ButtonGroup>
 			</div>
@@ -229,20 +229,20 @@
 		<div class="mx-auto w-md my-20 prose prose-invert lg:prose-xl">
 			<Heading tag="h3">Relevant Documents</Heading>
 			{#each searchResults as result}
-				{#if result.document.derivedStructData.link.endsWith('pdf')}
+				{#if result.document.derivedStructData.link.endsWith("pdf")}
 					<Card
 						class="my-6"
 						size="lg"
 						target="_blank"
 						href={result.document.derivedStructData.link
 							.replace(
-								'gs://dora-unstructured-docs/',
-								'https://storage.googleapis.com/dora-unstructured-docs/'
+								"gs://dora-unstructured-docs/",
+								"https://storage.googleapis.com/dora-unstructured-docs/"
 							)
-							.replace('.html', '')
-							.replaceAll('$', '/')
-							.replaceAll('#', ':')
-							.replace('dora-dev', 'dora.dev')}
+							.replace(".html", "")
+							.replaceAll("$", "/")
+							.replaceAll("#", ":")
+							.replace("dora-dev", "dora.dev")}
 					>
 						<div class="flex gap-6">
 							<div>
@@ -267,12 +267,12 @@
 								<h5 class="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
 									{makeTitle(
 										result.document.derivedStructData.link
-											.replace('gs://dora-unstructured-docs/', '')
-											.replace('https', '')
-											.replace('.html', '')
-											.replaceAll('$', '-')
-											.replaceAll('#', '-')
-											.replace('dora-dev', '')
+											.replace("gs://dora-unstructured-docs/", "")
+											.replace("https", "")
+											.replace(".html", "")
+											.replaceAll("$", "-")
+											.replaceAll("#", "-")
+											.replace("dora-dev", "")
 									)}
 								</h5>
 								<p class="font-normal text-gray-700 dark:text-gray-400 leading-tight">
@@ -287,11 +287,11 @@
 						size="lg"
 						target="_blank"
 						href={result.document.derivedStructData.link
-							.replace('gs://dora-unstructured-docs/', '')
-							.replace('.html', '')
-							.replaceAll('$', '/')
-							.replaceAll('#', ':')
-							.replace('dora-dev', 'dora.dev')}
+							.replace("gs://dora-unstructured-docs/", "")
+							.replace(".html", "")
+							.replaceAll("$", "/")
+							.replaceAll("#", ":")
+							.replace("dora-dev", "dora.dev")}
 					>
 						<div class="flex gap-6">
 							<div>
@@ -316,12 +316,12 @@
 								<h5 class="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
 									{makeTitle(
 										result.document.derivedStructData.link
-											.replace('gs://dora-unstructured-docs/', '')
-											.replace('https', '')
-											.replace('.html', '')
-											.replaceAll('$', '-')
-											.replaceAll('#', '-')
-											.replace('dora-dev', '')
+											.replace("gs://dora-unstructured-docs/", "")
+											.replace("https", "")
+											.replace(".html", "")
+											.replaceAll("$", "-")
+											.replaceAll("#", "-")
+											.replace("dora-dev", "")
 									)}
 								</h5>
 								<p class="font-normal text-gray-700 dark:text-gray-400 leading-tight">
