@@ -35,7 +35,7 @@
 	}
 
 	async function onSubmit() {
-		queries.push(input)
+		queries.push(input);
 		waiting = true;
 		const response = await widgetConverseConversation(widgetId, input);
 		waiting = false;
@@ -49,16 +49,16 @@
 
 	function updateSearchField(text: string) {
 		input = text;
-		conversationID = "-";
+		conversationID = '-';
 		replies = [];
 		searchResults = [];
 		queries = [];
-		document.getElementById("submit")!.click();
+		document.getElementById('submit')!.click();
 	}
 
 	function resetForm() {
-		input = "";
-		conversationID = "-";
+		input = '';
+		conversationID = '-';
 		replies = [];
 		searchResults = [];
 		queries = [];
@@ -85,10 +85,10 @@
 	</NavUl>
 </Navbar>
 
-<Alert border color="green" class="mt-2">
+<Alert border color="green" class="mt-2 text-md">
 	<InfoCircleSolid slot="icon" class="w-4 h-4" />
- 		It's here! The <span class="font-medium">2023 Accelerate State of DevOps
- 		Report</span> is now available and indexed in Ask DORA!
+	It's here! The <span class="font-medium">2023 Accelerate State of DevOps Report</span> is now available
+	and indexed in Ask DORA!
 </Alert>
 
 <div class="flex flex-col w-full px-10">
@@ -121,13 +121,15 @@
 			<div class="text-center mb-8">
 				<span class="font-bold">Example questions:</span>
 				<ButtonGroup>
-					<Button on:click={() => updateSearchField("What are the Four Key Metrics?")}>
+					<Button on:click={() => updateSearchField('What are the Four Key Metrics?')}>
 						What are the Four Key Metrics?</Button
 					>
-					<Button on:click={() => updateSearchField("How can I measure developer happiness?")}>
+					<Button on:click={() => updateSearchField('How can I measure developer happiness?')}>
 						How can I measure developer happiness?
 					</Button>
-					<Button on:click={() => updateSearchField("What does it mean to have strong user focus?")}>
+					<Button
+						on:click={() => updateSearchField('What does it mean to have strong user focus?')}
+					>
 						What does it mean to have strong user focus?
 					</Button>
 				</ButtonGroup>
@@ -191,8 +193,8 @@
 						type="reset"
 						class="bg-gray-500 w-[100px] h-[40px] hover:bg-blue-700 disabled:bg-slate-900 text-white font-bold py-2 px-4 rounded flex justify-center"
 						on:click={resetForm}
-					>Reset
-				</button>
+						>Reset
+					</button>
 				</div>
 			</div>
 		</form>
