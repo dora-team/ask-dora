@@ -4,14 +4,18 @@
 	import { Navbar, NavBrand, NavLi, NavUl } from 'flowbite-svelte';
 	import { Heading, A, Label, Card } from 'flowbite-svelte';
 	import { Section, Cta } from 'flowbite-svelte-blocks';
+	import { Alert } from 'flowbite-svelte';
+	import { InfoCircleSolid } from 'flowbite-svelte-icons';
+	import { ButtonGroup, Button } from 'flowbite-svelte';
 
 	const widgetId = 'aaf79227-48c1-4e6a-aad0-755cf53f07cb';
 
 	let ready = false;
 	let waiting = false;
 	let input = '';
-	let placeholder = 'Ask me anything about DORA...';
+	let placeholder = 'Ask DORA anything...';
 
+	let queries: any[] = [];
 	let replies: { reply: string }[] = [];
 	let conversationID = '-';
 	let searchResults: any[] = [];
@@ -31,6 +35,7 @@
 	}
 
 	async function onSubmit() {
+		queries.push(input)
 		waiting = true;
 		const response = await widgetConverseConversation(widgetId, input);
 		waiting = false;
@@ -40,6 +45,23 @@
 		replies = [...replies, response.converseConversationResponse.reply];
 		searchResults = response.converseConversationResponse.searchResults;
 		window.scrollTo(0, 500);
+	}
+
+	function updateSearchField(text: string) {
+		input = text;
+		conversationID = "-";
+		replies = [];
+		searchResults = [];
+		queries = [];
+		document.getElementById("submit")!.click();
+	}
+
+	function resetForm() {
+		input = "";
+		conversationID = "-";
+		replies = [];
+		searchResults = [];
+		queries = [];
 	}
 </script>
 
@@ -63,12 +85,18 @@
 	</NavUl>
 </Navbar>
 
+<Alert border color="green" class="mt-2">
+	<InfoCircleSolid slot="icon" class="w-4 h-4" />
+ 		It's here! The <span class="font-medium">2023 Accelerate State of DevOps
+ 		Report</span> is now available and indexed in Ask DORA!
+</Alert>
+
 <div class="flex flex-col w-full px-10">
-	<div class="mt-10 px-10 -mb-16">
+	<div class="mt-10 px-10 -mb-20">
 		<img src="dora.png" width="400px" alt="DevOps Research and Assessment (DORA)" />
 	</div>
 	<Section name="cta">
-		<Cta>
+		<Cta ctatype="image">
 			<svelte:fragment slot="h2">Ask DORA anything in natural language</svelte:fragment>
 			<p class="mt-6 mb-2 font-light text-gray-500 dark:text-gray-400 md:text-lg">
 				DORA is the largest and longest running research program of its kind that seeks to
@@ -88,11 +116,22 @@
 			</p>
 		</Cta>
 
-		<form class="w-full flex flex-col items-center" on:submit|preventDefault={onSubmit}>
+		<form class="w-full flex flex-col items-center -mt-6" on:submit|preventDefault={onSubmit}>
 			<h1 class="my-2 text-white text-xl text-center">My custom search widget</h1>
-			<Label for="email" class="text-lg block mb-4">
-				Search the content of the DORA website using generative AI on Google Cloud
-			</Label>
+			<div class="text-center mb-8">
+				<span class="font-bold">Example questions:</span>
+				<ButtonGroup>
+					<Button on:click={() => updateSearchField("What are the Four Key Metrics?")}>
+						What are the Four Key Metrics?</Button
+					>
+					<Button on:click={() => updateSearchField("How can I measure developer happiness?")}>
+						How can I measure developer happiness?
+					</Button>
+					<Button on:click={() => updateSearchField("What does it mean to have strong user focus?")}>
+						What does it mean to have strong user focus?
+					</Button>
+				</ButtonGroup>
+			</div>
 			<div>
 				<div class="relative text-gray-600 focus-within:text-gray-400 flex justify-center gap-2">
 					<span class="absolute inset-y-0 left-0 flex items-center pl-2">
@@ -112,13 +151,12 @@
 						type="search"
 						name="search"
 						id="search"
+						class="py-2 text-md w-[500px] text-black bg-white rounded-md pl-10 focus:bg-white focus:text-gray-900"
+						{placeholder}
 						bind:value={input}
-						disabled={!ready}
-						class="py-2 text-md w-[500px] text-white bg-white rounded-md pl-10 focus:outline-none focus:bg-white focus:text-gray-900"
-						placeholder={!ready ? 'Initializing...' : placeholder}
-						autocomplete="off"
 					/>
 					<button
+						id="submit"
 						type="submit"
 						disabled={!ready || waiting}
 						class="bg-blue-500 w-[100px] h-[40px] hover:bg-blue-700 disabled:bg-slate-900 text-white font-bold py-2 px-4 rounded flex justify-center"
@@ -148,6 +186,13 @@
 							Search
 						{/if}
 					</button>
+					<button
+						id="clear"
+						type="reset"
+						class="bg-gray-500 w-[100px] h-[40px] hover:bg-blue-700 disabled:bg-slate-900 text-white font-bold py-2 px-4 rounded flex justify-center"
+						on:click={resetForm}
+					>Reset
+				</button>
 				</div>
 			</div>
 		</form>
@@ -157,14 +202,17 @@
 		{#if searchResults.length > 0}
 			<Heading tag="h3">Generated Summary</Heading>
 		{/if}
-		{#each replies as reply}
+		{#each replies as reply, i}
 			<div>
 				<Card class="my-6 bg-blue-100" size="lg">
 					<div class="flex gap-5">
-						<div>
-							<img src="quote.svg" width="100px" alt="Quote" />
+						<div class="basis-5 grow-0 shrink-0 my-auto">
+							<img src="quote.png" width="20" alt="Quote" />
 						</div>
-						<div>
+						<div class="basis-100">
+							<p class="font-bold text-gray-700 dark:text-gray-400 leading-tight mb-4">
+								{queries[i]}
+							</p>
 							<p class="font-normal text-gray-700 dark:text-gray-400 leading-tight">
 								{@html reply.reply}
 							</p>
