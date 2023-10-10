@@ -1,0 +1,2 @@
+python-slugify==8.0.1
+Scrapy==2.11.0
