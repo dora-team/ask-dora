@@ -239,6 +239,10 @@
 								'gs://dora-unstructured-docs/',
 								'https://storage.googleapis.com/dora-unstructured-docs/'
 							)
+							.replace(
+								'https://storage.googleapis.com/dora-unstructured-docs/2023 Accelerate State of DevOps Report.pdf',
+								'https://cloud.google.com/devops/state-of-devops'
+							)
 							.replace('.html', '')
 							.replaceAll('$', '/')
 							.replaceAll('#', ':')
