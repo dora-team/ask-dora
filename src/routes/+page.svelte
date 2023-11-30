@@ -117,7 +117,7 @@
 		</Cta>
 
 		<form class="w-full flex flex-col items-center -mt-6" on:submit|preventDefault={onSubmit}>
-			<h1 class="my-2 text-white text-xl text-center">My custom search widget</h1>
+			<h1 class="my-2 text-white text-xl text-center">&nbsp;</h1>
 			<div class="text-center mb-8">
 				<span class="font-bold">Example questions:</span>
 				<ButtonGroup>
