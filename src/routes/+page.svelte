@@ -4,8 +4,6 @@
 	import { Navbar, NavBrand, NavLi, NavUl } from 'flowbite-svelte';
 	import { Heading, A, Label, Card } from 'flowbite-svelte';
 	import { Section, Cta } from 'flowbite-svelte-blocks';
-	import { Alert } from 'flowbite-svelte';
-	import { InfoCircleSolid } from 'flowbite-svelte-icons';
 	import { ButtonGroup, Button } from 'flowbite-svelte';
 
 	const widgetId = 'aaf79227-48c1-4e6a-aad0-755cf53f07cb';
@@ -85,17 +83,11 @@
 	</NavUl>
 </Navbar>
 
-<Alert border color="green" class="mt-2 text-md">
-	<InfoCircleSolid slot="icon" class="w-4 h-4" />
-	It's here! The <span class="font-medium">2023 Accelerate State of DevOps Report</span> is now available
-	and indexed in Ask DORA!
-</Alert>
-
 <div class="flex flex-col w-full px-10">
-	<div class="mt-10 px-10 -mb-20">
-		<img src="dora.png" width="400px" alt="DevOps Research and Assessment (DORA)" />
-	</div>
 	<Section name="cta">
+		<div class="-mt-14 mb-10">
+			<img src="dora.png" width="400px" alt="DevOps Research and Assessment (DORA)" />
+		</div>
 		<Cta ctatype="image">
 			<svelte:fragment slot="h2">Ask DORA anything in natural language</svelte:fragment>
 			<p class="mt-6 mb-2 font-light text-gray-500 dark:text-gray-400 md:text-lg">
@@ -116,9 +108,8 @@
 			</p>
 		</Cta>
 
-		<form class="w-full flex flex-col items-center -mt-6" on:submit|preventDefault={onSubmit}>
-			<h1 class="my-2 text-white text-xl text-center">&nbsp;</h1>
-			<div class="text-center mb-8">
+		<form class="w-full flex flex-col items-center mt-10" on:submit|preventDefault={onSubmit}>
+			<div class="text-center mb-12">
 				<span class="font-bold">Example questions:</span>
 				<ButtonGroup>
 					<Button on:click={() => updateSearchField('What are the Four Key Metrics?')}>
