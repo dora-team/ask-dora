@@ -1,7 +1,7 @@
 {
-	"hosting": {
-		"target": "ask-dora",
-		"public": "build",
-		"ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
-	}
+  "hosting": {
+    "target": "ask-dora",
+    "public": "build",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
+  }
 }
