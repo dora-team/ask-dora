@@ -140,7 +140,8 @@
             id="search"
             class="py-2 text-md w-[500px] text-black bg-white rounded-md pl-10 focus:bg-white focus:text-gray-900"
             {placeholder}
-            bind:value={input} />
+            bind:value={input}
+            required />
           <button
             id="submit"
             type="submit"
