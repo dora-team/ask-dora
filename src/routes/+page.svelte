@@ -77,7 +77,7 @@
       >Vertex AI Search</NavLi>
     <NavLi class="text-gray-50" href="https://cloud.google.com/ai/generative-ai"
       >Generative AI on Google Cloud</NavLi>
-    <NavLi class="text-gray-50" href="https://github.com/koverholt/ask-dora">Source Code</NavLi>
+    <NavLi class="text-gray-50" href="https://github.com/dora-team/ask-dora">Source Code</NavLi>
   </NavUl>
 </Navbar>
 
