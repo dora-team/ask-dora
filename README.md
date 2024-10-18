@@ -26,10 +26,22 @@ DORA.
 4. Paste the embed codes for the search and chat apps
 5. Preview the site locally with `npm run dev`
 
-## Steps to deploy site
+## Steps to deploy site (initially)
 
 1. Enable the Firebase API
 2. Deploy a default site
 3. Create an additional site for https://ask-dora.web.app
 4. Configure deploy targets in `.firebaserc` and `firebase.json`
 5. Deploy site to Firebase Hosting with `firebase deploy`
+
+## Steps to update the site
+
+1. Open a pull request for https://github.com/dora-team/ask-dora/
+2. Have that pull request reviewed and merged
+
+From the `main` branch
+
+1. Run `npm run build`
+2. Run `firebase deploy`
+
+You will need the [Firebase CLI](https://firebase.google.com/docs/cli) the node package is the recommended way to install it.
