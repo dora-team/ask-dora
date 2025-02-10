@@ -222,7 +222,7 @@
               )
               .replace(
                 'https://storage.googleapis.com/dora-unstructured-docs/2023 Accelerate State of DevOps Report.pdf',
-                'https://cloud.google.com/devops/state-of-devops'
+                'https://dora.dev/dora-report-2023/'
               )
               .replace('.html', '')
               .replaceAll('$', '/')
