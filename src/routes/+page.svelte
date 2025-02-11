@@ -221,8 +221,48 @@
                 'https://storage.googleapis.com/dora-unstructured-docs/'
               )
               .replace(
+                'https://storage.googleapis.com/dora-unstructured-docs/Whitepaper - The ROI of DevOps Transformation 2020 - Google Cloud.pdf',
+                'https://dora.dev/dora-report-roi'
+              )
+              .replace(
+                'https://storage.googleapis.com/dora-unstructured-docs/2014 State of DevOps Report.pdf',
+                'https://dora.dev/dora-report-2014'
+              )
+              .replace(
+                'https://storage.googleapis.com/dora-unstructured-docs/2015 State of DevOps Report.pdf',
+                'https://dora.dev/dora-report-2015'
+              )
+              .replace(
+                'https://storage.googleapis.com/dora-unstructured-docs/2016 State of DevOps Report.pdf',
+                'https://dora.dev/dora-report-2016'
+              )
+              .replace(
+                'https://storage.googleapis.com/dora-unstructured-docs/2017 State of DevOps Report.pdf',
+                'https://dora.dev/dora-report-2017'
+              )
+              .replace(
+                'https://storage.googleapis.com/dora-unstructured-docs/2018 Accelerate State of DevOps Report.pdf',
+                'https://dora.dev/dora-report-2018'
+              )
+              .replace(
+                'https://storage.googleapis.com/dora-unstructured-docs/2019 Accelerate State of DevOps Report.pdf',
+                'https://dora.dev/dora-report-2019'
+              )
+              .replace(
+                'https://storage.googleapis.com/dora-unstructured-docs/2021 Accelerate State of DevOps Report.pdf',
+                'https://dora.dev/dora-report-2021'
+              )
+              .replace(
+                'https://storage.googleapis.com/dora-unstructured-docs/2022 Accelerate State of DevOps Report.pdf',
+                'https://dora.dev/dora-report-2022'
+              )
+              .replace(
                 'https://storage.googleapis.com/dora-unstructured-docs/2023 Accelerate State of DevOps Report.pdf',
                 'https://dora.dev/dora-report-2023/'
+              )
+              .replace(
+                'https://storage.googleapis.com/dora-unstructured-docs/2024 Accelerate State of DevOps Report.pdf',
+                'https://dora.dev/dora-report-2024/'
               )
               .replace('.html', '')
               .replaceAll('$', '/')
