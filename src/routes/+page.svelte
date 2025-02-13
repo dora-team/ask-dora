@@ -61,6 +61,25 @@
     searchResults = [];
     queries = [];
   }
+
+  const reportThumbnails = {
+    'gs://dora-unstructured-docs/Whitepaper - The ROI of DevOps Transformation 2020 - Google Cloud.pdf': '/thumbnails/roi-thumbnail.png', // Replace with actual path
+    'gs://dora-unstructured-docs/2014 State of DevOps Report.pdf': '/thumbnails/2014-thumbnail.png',
+    'gs://dora-unstructured-docs/2015 State of DevOps Report.pdf': '/thumbnails/2015-thumbnail.png',
+    'gs://dora-unstructured-docs/2016 State of DevOps Report.pdf': '/thumbnails/2016-thumbnail.png',
+    'gs://dora-unstructured-docs/2017 State of DevOps Report.pdf': '/thumbnails/2017-thumbnail.png',
+    'gs://dora-unstructured-docs/2018 Accelerate State of DevOps Report.pdf': '/thumbnails/2018-thumbnail.png',
+    'gs://dora-unstructured-docs/2019 Accelerate State of DevOps Report.pdf': '/thumbnails/2019-thumbnail.png',
+    'gs://dora-unstructured-docs/2021 Accelerate State of DevOps Report.pdf': '/thumbnails/2021-thumbnail.png',
+    'gs://dora-unstructured-docs/2022 Accelerate State of DevOps Report.pdf': '/thumbnails/2022-thumbnail.png',
+    'gs://dora-unstructured-docs/2023 Accelerate State of DevOps Report.pdf': '/thumbnails/2023-thumbnail.png',
+    'gs://dora-unstructured-docs/2024 Accelerate State of DevOps Report.pdf': '/thumbnails/2024-thumbnail.png',
+  };
+
+  function getReportThumbnail(reportUrl) {
+    const reportKey = reportUrl.replace('https://dora.dev/', '');
+    return reportThumbnails[reportKey] || '/thumbnails/pdf.svg'; // Fallback
+  }
 </script>
 
 <Navbar class="bg-[#49a0ec] pt-2">
@@ -270,20 +289,7 @@
               .replace('dora-dev', 'dora.dev')}>
             <div class="flex gap-6">
               <div>
-                <svg
-                  class="w-[48px] h-[48px] text-gray-800 dark:text-white"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 16 20">
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="1.5"
-                    stroke-opacity="0.2"
-                    d="M1 18a.969.969 0 0 0 .933 1h12.134A.97.97 0 0 0 15 18M1 7V5.828a2 2 0 0 1 .586-1.414l2.828-2.828A2 2 0 0 1 5.828 1h8.239A.97.97 0 0 1 15 2v5M6 1v4a1 1 0 0 1-1 1H1m0 9v-5h1.5a1.5 1.5 0 1 1 0 3H1m12 2v-5h2m-2 3h2m-8-3v5h1.375A1.626 1.626 0 0 0 10 13.375v-1.75A1.626 1.626 0 0 0 8.375 10H7Z" />
-                </svg>
+                <img src={getReportThumbnail(result.document.derivedStructData.link)} width=100 height=100 />
               </div>
               <div>
                 <h5 class="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
@@ -316,20 +322,7 @@
               .replace('dora-dev', 'dora.dev')}>
             <div class="flex gap-6">
               <div>
-                <svg
-                  class="w-[48px] h-[48px] text-gray-800 dark:text-white"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 19 19">
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="1.5"
-                    stroke-opacity="0.2"
-                    d="M11.013 7.962a3.519 3.519 0 0 0-4.975 0l-3.554 3.554a3.518 3.518 0 0 0 4.975 4.975l.461-.46m-.461-4.515a3.518 3.518 0 0 0 4.975 0l3.553-3.554a3.518 3.518 0 0 0-4.974-4.975L10.3 3.7" />
-                </svg>
+                <img src="/thumbnails/html.svg" width="100" height="100" />
               </div>
               <div>
                 <h5 class="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
