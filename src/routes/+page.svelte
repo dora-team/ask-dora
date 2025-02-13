@@ -62,23 +62,86 @@
     queries = [];
   }
 
-  const reportThumbnails = {
-    'gs://dora-unstructured-docs/Whitepaper - The ROI of DevOps Transformation 2020 - Google Cloud.pdf': '/thumbnails/roi-thumbnail.png', // Replace with actual path
-    'gs://dora-unstructured-docs/2014 State of DevOps Report.pdf': '/thumbnails/2014-thumbnail.png',
-    'gs://dora-unstructured-docs/2015 State of DevOps Report.pdf': '/thumbnails/2015-thumbnail.png',
-    'gs://dora-unstructured-docs/2016 State of DevOps Report.pdf': '/thumbnails/2016-thumbnail.png',
-    'gs://dora-unstructured-docs/2017 State of DevOps Report.pdf': '/thumbnails/2017-thumbnail.png',
-    'gs://dora-unstructured-docs/2018 Accelerate State of DevOps Report.pdf': '/thumbnails/2018-thumbnail.png',
-    'gs://dora-unstructured-docs/2019 Accelerate State of DevOps Report.pdf': '/thumbnails/2019-thumbnail.png',
-    'gs://dora-unstructured-docs/2021 Accelerate State of DevOps Report.pdf': '/thumbnails/2021-thumbnail.png',
-    'gs://dora-unstructured-docs/2022 Accelerate State of DevOps Report.pdf': '/thumbnails/2022-thumbnail.png',
-    'gs://dora-unstructured-docs/2023 Accelerate State of DevOps Report.pdf': '/thumbnails/2023-thumbnail.png',
-    'gs://dora-unstructured-docs/2024 Accelerate State of DevOps Report.pdf': '/thumbnails/2024-thumbnail.png',
+  // Maps Google Storage URLs (or other identifiers) to report metadata.
+  // Used to provide thumbnails and correct website URLs for search results.
+  const reportData = {
+    'gs://dora-unstructured-docs/Whitepaper - The ROI of DevOps Transformation 2020 - Google Cloud.pdf': {
+      thumbnail: '/thumbnails/roi-thumbnail.png',
+      url: 'https://dora.dev/dora-report-roi'
+    },
+    'gs://dora-unstructured-docs/2014 State of DevOps Report.pdf': {
+      thumbnail: '/thumbnails/2014-thumbnail.png',
+      url: 'https://dora.dev/dora-report-2014'
+    },
+    'gs://dora-unstructured-docs/2015 State of DevOps Report.pdf': {
+      thumbnail: '/thumbnails/2015-thumbnail.png',
+      url: 'https://dora.dev/dora-report-2015'
+    },
+    'gs://dora-unstructured-docs/2016 State of DevOps Report.pdf': {
+      thumbnail: '/thumbnails/2016-thumbnail.png',
+      url: 'https://dora.dev/dora-report-2016'
+    },
+    'gs://dora-unstructured-docs/2017 State of DevOps Report.pdf': {
+      thumbnail: '/thumbnails/2017-thumbnail.png',
+      url: 'https://dora.dev/dora-report-2017'
+    },
+    'gs://dora-unstructured-docs/2018 Accelerate State of DevOps Report.pdf': {
+      thumbnail: '/thumbnails/2018-thumbnail.png',
+      url: 'https://dora.dev/dora-report-2018'
+    },
+    'gs://dora-unstructured-docs/2019 Accelerate State of DevOps Report.pdf': {
+      thumbnail: '/thumbnails/2019-thumbnail.png',
+      url: 'https://dora.dev/dora-report-2019'
+    },
+    'gs://dora-unstructured-docs/2021 Accelerate State of DevOps Report.pdf': {
+      thumbnail: '/thumbnails/2021-thumbnail.png',
+      url: 'https://dora.dev/dora-report-2021'
+    },
+    'gs://dora-unstructured-docs/2022 Accelerate State of DevOps Report.pdf': {
+      thumbnail: '/thumbnails/2022-thumbnail.png',
+      url: 'https://dora.dev/dora-report-2022'
+    },
+    'gs://dora-unstructured-docs/2023 Accelerate State of DevOps Report.pdf': {
+      thumbnail: '/thumbnails/2023-thumbnail.png',
+      url: 'https://dora.dev/dora-report-2023'
+    },
+    'gs://dora-unstructured-docs/2024 Accelerate State of DevOps Report.pdf': {
+      thumbnail: '/thumbnails/2024-thumbnail.png',
+      url: 'https://dora.dev/dora-report-2024'
+    },
+    'default': { // Default for unmatched entries
+      thumbnail: '/thumbnails/pdf.svg',
+      url: '' // Or some default URL
+    }
   };
 
-  function getReportThumbnail(reportUrl) {
-    const reportKey = reportUrl.replace('https://dora.dev/', '');
-    return reportThumbnails[reportKey] || '/thumbnails/pdf.svg'; // Fallback
+   /**
+   * Retrieves report metadata (thumbnail and URL) based on the provided report URL.
+   *
+   * @param {string} reportUrl The URL or identifier of the report.  This can be a Google Storage URL,
+   *                           a DORA website URL, or another identifier used in the `reportData` map.
+   * @returns {object} An object containing the report's thumbnail URL and website URL.  Returns
+   *                  a default object if the `reportUrl` is not found in `reportData`.  If the
+   *                  default object is used and `reportUrl` starts with "gs://", the URL is
+   *                  transformed to a publicly accessible Google Storage URL. If it's a default object
+   *                  and doesn't start with "gs://", data.url is set to reportUrl.
+   */
+  function getReportData(reportUrl) {
+      const storageKey = reportUrl.replace('https://dora.dev/', '');
+      const data = reportData[storageKey] || reportData['default'];
+
+      if (data === reportData['default'] && reportUrl.startsWith('gs://')) { // Only apply if it's the default AND a gs:// URL
+        data.url = reportUrl
+          .replace('gs://dora-unstructured-docs/', 'https://storage.googleapis.com/dora-unstructured-docs/')
+          .replace('.html', '')
+          .replaceAll('$', '/')
+          .replaceAll('#', ':')
+          .replace('dora-dev', 'dora.dev');
+      } else if (data === reportData['default']){
+          data.url = reportUrl; // or handle non-gs: URLs.  Maybe set data.url to null and conditionally render the link in the component
+      }
+
+      return data;
   }
 </script>
 
@@ -234,62 +297,11 @@
             class="my-6"
             size="lg"
             target="_blank"
-            href={result.document.derivedStructData.link
-              .replace(
-                'gs://dora-unstructured-docs/',
-                'https://storage.googleapis.com/dora-unstructured-docs/'
-              )
-              .replace(
-                'https://storage.googleapis.com/dora-unstructured-docs/Whitepaper - The ROI of DevOps Transformation 2020 - Google Cloud.pdf',
-                'https://dora.dev/dora-report-roi'
-              )
-              .replace(
-                'https://storage.googleapis.com/dora-unstructured-docs/2014 State of DevOps Report.pdf',
-                'https://dora.dev/dora-report-2014'
-              )
-              .replace(
-                'https://storage.googleapis.com/dora-unstructured-docs/2015 State of DevOps Report.pdf',
-                'https://dora.dev/dora-report-2015'
-              )
-              .replace(
-                'https://storage.googleapis.com/dora-unstructured-docs/2016 State of DevOps Report.pdf',
-                'https://dora.dev/dora-report-2016'
-              )
-              .replace(
-                'https://storage.googleapis.com/dora-unstructured-docs/2017 State of DevOps Report.pdf',
-                'https://dora.dev/dora-report-2017'
-              )
-              .replace(
-                'https://storage.googleapis.com/dora-unstructured-docs/2018 Accelerate State of DevOps Report.pdf',
-                'https://dora.dev/dora-report-2018'
-              )
-              .replace(
-                'https://storage.googleapis.com/dora-unstructured-docs/2019 Accelerate State of DevOps Report.pdf',
-                'https://dora.dev/dora-report-2019'
-              )
-              .replace(
-                'https://storage.googleapis.com/dora-unstructured-docs/2021 Accelerate State of DevOps Report.pdf',
-                'https://dora.dev/dora-report-2021'
-              )
-              .replace(
-                'https://storage.googleapis.com/dora-unstructured-docs/2022 Accelerate State of DevOps Report.pdf',
-                'https://dora.dev/dora-report-2022'
-              )
-              .replace(
-                'https://storage.googleapis.com/dora-unstructured-docs/2023 Accelerate State of DevOps Report.pdf',
-                'https://dora.dev/dora-report-2023/'
-              )
-              .replace(
-                'https://storage.googleapis.com/dora-unstructured-docs/2024 Accelerate State of DevOps Report.pdf',
-                'https://dora.dev/dora-report-2024/'
-              )
-              .replace('.html', '')
-              .replaceAll('$', '/')
-              .replaceAll('#', ':')
-              .replace('dora-dev', 'dora.dev')}>
+            href={getReportData(result.document.derivedStructData.link).url}>
             <div class="flex gap-6">
               <div>
-                <img src={getReportThumbnail(result.document.derivedStructData.link)} width=100 height=100 />
+                <!-- PDF results thumbnail -->
+                <img src={getReportData(result.document.derivedStructData.link).thumbnail} width=100 height=100 />
               </div>
               <div>
                 <h5 class="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
