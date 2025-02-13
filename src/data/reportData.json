@@ -1,0 +1,62 @@
+{
+  "gs://dora-unstructured-docs/Whitepaper - The ROI of DevOps Transformation 2020 - Google Cloud.pdf": {
+    "thumbnail": "/thumbnails/roi-thumbnail.png",
+    "url": "https://dora.dev/dora-report-roi",
+    "title": "Whitepaper - The ROI of DevOps Transformation"
+  },
+  "gs://dora-unstructured-docs/2014 State of DevOps Report.pdf": {
+    "thumbnail": "/thumbnails/2014-thumbnail.png",
+    "url": "https://dora.dev/dora-report-2014",
+    "title": "2014 State of DevOps Report"
+  },
+  "gs://dora-unstructured-docs/2015 State of DevOps Report.pdf": {
+    "thumbnail": "/thumbnails/2015-thumbnail.png",
+    "url": "https://dora.dev/dora-report-2015",
+    "title": "2015 State of DevOps Report"
+  },
+  "gs://dora-unstructured-docs/2016 State of DevOps Report.pdf": {
+    "thumbnail": "/thumbnails/2016-thumbnail.png",
+    "url": "https://dora.dev/dora-report-2016",
+    "title": "2016 State of DevOps Report"
+  },
+  "gs://dora-unstructured-docs/2017 State of DevOps Report.pdf": {
+    "thumbnail": "/thumbnails/2017-thumbnail.png",
+    "url": "https://dora.dev/dora-report-2017",
+    "title": "2017 State of DevOps Report"
+  },
+  "gs://dora-unstructured-docs/2018 Accelerate State of DevOps Report.pdf": {
+    "thumbnail": "/thumbnails/2018-thumbnail.png",
+    "url": "https://dora.dev/dora-report-2018",
+    "title": "2018 Accelerate State of DevOps Report"
+  },
+  "gs://dora-unstructured-docs/2019 Accelerate State of DevOps Report.pdf": {
+    "thumbnail": "/thumbnails/2019-thumbnail.png",
+    "url": "https://dora.dev/dora-report-2019",
+    "title": "2019 Accelerate State of DevOps Report"
+  },
+  "gs://dora-unstructured-docs/2021 Accelerate State of DevOps Report.pdf": {
+    "thumbnail": "/thumbnails/2021-thumbnail.png",
+    "url": "https://dora.dev/dora-report-2021",
+    "title": "2021 Accelerate State of DevOps Report"
+  },
+  "gs://dora-unstructured-docs/2022 Accelerate State of DevOps Report.pdf": {
+    "thumbnail": "/thumbnails/2022-thumbnail.png",
+    "url": "https://dora.dev/dora-report-2022",
+    "title": "2022 Accelerate State of DevOps Report"
+  },
+  "gs://dora-unstructured-docs/2023 Accelerate State of DevOps Report.pdf": {
+    "thumbnail": "/thumbnails/2023-thumbnail.png",
+    "url": "https://dora.dev/dora-report-2023",
+    "title": "2023 Accelerate State of DevOps Report"
+  },
+  "gs://dora-unstructured-docs/2024 Accelerate State of DevOps Report.pdf": {
+    "thumbnail": "/thumbnails/2024-thumbnail.png",
+    "url": "https://dora.dev/dora-report-2024",
+    "title": "2024 Accelerate State of DevOps Report"
+  },
+  "default": {
+    "thumbnail": "/thumbnails/pdf.svg",
+    "url": "#",
+    "title": "Report Thumbnail"
+  }
+}
