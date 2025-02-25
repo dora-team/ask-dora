@@ -6,6 +6,8 @@
   import { Section, Cta } from 'flowbite-svelte-blocks';
   import { ButtonGroup, Button } from 'flowbite-svelte';
 
+  import reportData from '../data/reportData.json';
+
   const widgetId = 'aaf79227-48c1-4e6a-aad0-755cf53f07cb';
 
   let ready = false;
@@ -60,6 +62,66 @@
     replies = [];
     searchResults = [];
     queries = [];
+  }
+
+  /**
+   * Transforms a Google Cloud Storage URL into a publicly accessible URL.
+   *
+   * @param {string} gsUrl - The Google Cloud Storage URL (e.g., 'gs://...').
+   * @returns {string} The publicly accessible URL, or the original URL if it's not a gs:// URL.
+   * @throws {Error} If the input URL is invalid or does not start with "gs://".
+   */
+  function transformGsUrl(gsUrl: string): string {
+    if (!gsUrl.startsWith('gs://')) {
+        return gsUrl; // Not a gs:// URL, return as is
+    }
+
+    try {
+      new URL(gsUrl);
+    } catch (error) {
+      throw new Error(`Invalid URL format: ${gsUrl}`);
+      return gsUrl;  // Not a gs:// URL, return as is
+    }
+
+    return gsUrl
+      .replace('gs://dora-unstructured-docs/', 'https://storage.googleapis.com/dora-unstructured-docs/')
+      .replace('.html', '')
+      .replaceAll('$', '/')
+      .replaceAll('#', ':')
+      .replace('dora-dev', 'dora.dev');
+  }
+
+
+  /**
+   * Retrieves report metadata (thumbnail and URL) based on the provided report URL.
+   *
+   * @param {string} reportUrl - The URL or identifier of the report. This can be:
+   *                             - A Google Cloud Storage URL (e.g., 'gs://...').
+   *                             - A DORA website URL (e.g., 'https://dora.dev/...').
+   *                             - A key from the `reportData` map.
+   * @returns {{ thumbnail: string, url: string }} An object containing:
+   *                                               - `thumbnail`: The URL of the report's thumbnail image.
+   *                                               - `url`: The public-facing URL of the report.
+   *                                               If the `reportUrl` is not found in `reportData`, a default object
+   *                                               is returned. If the default object is used and the `reportUrl`
+   *                                               starts with "gs://", the `url` is transformed into a publicly
+   *                                               accessible Google Cloud Storage URL. If it's a default object and
+   *                                               doesn't start with "gs://", the `url` is set to the `reportUrl`.
+   */
+  function getReportData(reportUrl) {
+    const reportDataKey = reportUrl.replace('https://dora.dev/', '');
+    const reportMetadata = reportData[reportDataKey] || reportData['default'];
+
+    if (reportMetadata === reportData['default']) {
+      try {
+        reportMetadata.url = transformGsUrl(reportUrl);
+      } catch (error) {
+        console.error('Error transforming URL:', error);
+        reportMetadata.url = '#'; // Fallback to a safe default URL
+      }
+    }
+
+    return reportMetadata;
   }
 </script>
 
@@ -215,87 +277,19 @@
             class="my-6"
             size="lg"
             target="_blank"
-            href={result.document.derivedStructData.link
-              .replace(
-                'gs://dora-unstructured-docs/',
-                'https://storage.googleapis.com/dora-unstructured-docs/'
-              )
-              .replace(
-                'https://storage.googleapis.com/dora-unstructured-docs/Whitepaper - The ROI of DevOps Transformation 2020 - Google Cloud.pdf',
-                'https://dora.dev/dora-report-roi'
-              )
-              .replace(
-                'https://storage.googleapis.com/dora-unstructured-docs/2014 State of DevOps Report.pdf',
-                'https://dora.dev/dora-report-2014'
-              )
-              .replace(
-                'https://storage.googleapis.com/dora-unstructured-docs/2015 State of DevOps Report.pdf',
-                'https://dora.dev/dora-report-2015'
-              )
-              .replace(
-                'https://storage.googleapis.com/dora-unstructured-docs/2016 State of DevOps Report.pdf',
-                'https://dora.dev/dora-report-2016'
-              )
-              .replace(
-                'https://storage.googleapis.com/dora-unstructured-docs/2017 State of DevOps Report.pdf',
-                'https://dora.dev/dora-report-2017'
-              )
-              .replace(
-                'https://storage.googleapis.com/dora-unstructured-docs/2018 Accelerate State of DevOps Report.pdf',
-                'https://dora.dev/dora-report-2018'
-              )
-              .replace(
-                'https://storage.googleapis.com/dora-unstructured-docs/2019 Accelerate State of DevOps Report.pdf',
-                'https://dora.dev/dora-report-2019'
-              )
-              .replace(
-                'https://storage.googleapis.com/dora-unstructured-docs/2021 Accelerate State of DevOps Report.pdf',
-                'https://dora.dev/dora-report-2021'
-              )
-              .replace(
-                'https://storage.googleapis.com/dora-unstructured-docs/2022 Accelerate State of DevOps Report.pdf',
-                'https://dora.dev/dora-report-2022'
-              )
-              .replace(
-                'https://storage.googleapis.com/dora-unstructured-docs/2023 Accelerate State of DevOps Report.pdf',
-                'https://dora.dev/dora-report-2023/'
-              )
-              .replace(
-                'https://storage.googleapis.com/dora-unstructured-docs/2024 Accelerate State of DevOps Report.pdf',
-                'https://dora.dev/dora-report-2024/'
-              )
-              .replace('.html', '')
-              .replaceAll('$', '/')
-              .replaceAll('#', ':')
-              .replace('dora-dev', 'dora.dev')}>
+            href={getReportData(result.document.derivedStructData.link).url}>
             <div class="flex gap-6">
               <div>
-                <svg
-                  class="w-[48px] h-[48px] text-gray-800 dark:text-white"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 16 20">
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="1.5"
-                    stroke-opacity="0.2"
-                    d="M1 18a.969.969 0 0 0 .933 1h12.134A.97.97 0 0 0 15 18M1 7V5.828a2 2 0 0 1 .586-1.414l2.828-2.828A2 2 0 0 1 5.828 1h8.239A.97.97 0 0 1 15 2v5M6 1v4a1 1 0 0 1-1 1H1m0 9v-5h1.5a1.5 1.5 0 1 1 0 3H1m12 2v-5h2m-2 3h2m-8-3v5h1.375A1.626 1.626 0 0 0 10 13.375v-1.75A1.626 1.626 0 0 0 8.375 10H7Z" />
-                </svg>
+                <!-- PDF results thumbnail -->
+                <img
+                  src={getReportData(result.document.derivedStructData.link).thumbnail}
+                  alt={getReportData(result.document.derivedStructData.link).title}
+                  width={100}
+                  height={100} />
               </div>
               <div>
                 <h5 class="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
-                  {makeTitle(
-                    result.document.derivedStructData.link
-                      .replace('gs://dora-unstructured-docs/', '')
-                      .replace('https', '')
-                      .replace('.html', '')
-                      .replaceAll('$', '-')
-                      .replaceAll('#', '-')
-                      .replace('dora-dev', '')
-                  )}
+                  {getReportData(result.document.derivedStructData.link).title}
                 </h5>
                 <p class="font-normal text-gray-700 dark:text-gray-400 leading-tight">
                   {@html result.document.derivedStructData.snippets[0].snippet}
@@ -316,20 +310,11 @@
               .replace('dora-dev', 'dora.dev')}>
             <div class="flex gap-6">
               <div>
-                <svg
-                  class="w-[48px] h-[48px] text-gray-800 dark:text-white"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 19 19">
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="1.5"
-                    stroke-opacity="0.2"
-                    d="M11.013 7.962a3.519 3.519 0 0 0-4.975 0l-3.554 3.554a3.518 3.518 0 0 0 4.975 4.975l.461-.46m-.461-4.515a3.518 3.518 0 0 0 4.975 0l3.553-3.554a3.518 3.518 0 0 0-4.974-4.975L10.3 3.7" />
-                </svg>
+                <img
+                  src="/thumbnails/html.svg"
+                  alt="HTML Icon"
+                  width={100}
+                  height={100} />
               </div>
               <div>
                 <h5 class="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
