@@ -1,3 +1,7 @@
+**DEPRECATED**
+Ask DORA was an early experiment in using Generative AI to explore DORA research. It has been turned down and much of its functionality is available within dora.dev's search capability. The domain ask.dora.dev redirects to dora.dev/search.
+
+---
 # Ask DORA
 
 ## Overview
